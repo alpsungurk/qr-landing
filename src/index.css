@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+.font-display {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.fade-in {
+  animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.scanner-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #3b82f6;
+  box-shadow: 0 0 10px #3b82f6;
+  animation: scan 2s infinite linear alternate;
+}
+
+@keyframes scan {
+  0% { top: 0%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.qr-refresh {
+  animation: pulse-qr 10s infinite;
+}
+
+@keyframes pulse-qr {
+  0%, 95% { opacity: 1; transform: scale(1); }
+  97% { opacity: 0.5; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Reflection: wrapper contains mockup + reflection copy below */
+.mockup-wrapper-with-reflection {
+  position: relative;
+  display: inline-block;
+}
+
+.mockup-reflection {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0.22;
+  transform: scaleY(-1);
+  transform-origin: top center;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.35), transparent 75%);
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.35), transparent 75%);
+}
+
+.mockup-reflection > * {
+  flex-shrink: 0;
+}
+
+.mockup-reflection-hero-card { height: 70px; }
+.mockup-reflection-phone { height: 120px; }
+.mockup-reflection-box { height: 80px; }
+.mockup-reflection-dashboard { height: 60px; }
+.mockup-reflection-panel { height: 180px; }
+
+/* Hero device float */
+.hero-float {
+  animation: heroFloat 4s ease-in-out infinite;
+}
+
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0) rotate(3deg); }
+  50% { transform: translateY(-8px) rotate(3deg); }
+}
+
+.hero-float.hero-float-left {
+  animation: heroFloatLeft 4.5s ease-in-out infinite;
+}
+
+@keyframes heroFloatLeft {
+  0%, 100% { transform: translateY(0) rotate(-6deg); }
+  50% { transform: translateY(-6px) rotate(-6deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in,
+  .hero-float,
+  .qr-refresh,
+  .scanner-line {
+    animation: none !important;
+  }
+  .mockup-reflection { opacity: 0.12; }
+}
