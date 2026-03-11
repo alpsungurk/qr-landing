@@ -4,10 +4,8 @@ import {
   Menu,
   ArrowRight,
   PlayCircle,
-  QrCode,
   RefreshCcw,
   Camera,
-  Scan,
   Users,
   Tablet,
   Database,
@@ -102,7 +100,9 @@ function App() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex-shrink-0 flex items-center">
-              <a href="#" className="font-display text-xl font-bold tracking-tight text-slate-900">QRPDKS</a>
+              <a href="#" className="flex items-center">
+                <img src="/qrkapi.png" alt="QRKAPI" className="h-10 sm:h-11 w-auto object-contain" />
+              </a>
             </div>
             <div className="hidden md:flex space-x-8">
               <a href="#ozellikler" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors tracking-tight">Özellikler</a>
@@ -164,34 +164,32 @@ function App() {
             </motion.div>
 
             <motion.div
-              className="relative lg:h-[500px] flex items-center justify-center"
+              className="relative lg:min-h-[540px] flex items-center justify-center"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={viewport}
               transition={{ duration: 0.7, delay: 0.2 }}
             >
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-blue-400/20 rounded-full blur-3xl" />
-              <div className="mockup-wrapper-with-reflection inline-block relative min-h-[420px] flex justify-center items-center">
-              <div className="relative z-20 w-56 h-[400px] bg-white border-[6px] border-slate-900 rounded-[2.5rem] shadow-2xl transform rotate-3 overflow-hidden hero-float">
-                <div className="absolute top-0 inset-x-0 h-5 flex justify-center z-30">
-                  <div className="w-20 h-4 bg-slate-900 rounded-b-xl" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[320px] bg-blue-400/20 rounded-full blur-3xl" />
+              <div className="mockup-wrapper-with-reflection inline-block relative min-h-[460px] sm:min-h-[520px] flex justify-center items-center">
+              <div className="relative z-20 w-56 h-[460px] sm:w-60 sm:h-[520px] bg-white border-[6px] border-slate-900 rounded-[2.75rem] shadow-2xl transform rotate-3 overflow-hidden hero-float">
+                <div className="absolute top-0 inset-x-0 h-6 flex justify-center z-30">
+                  <div className="w-24 h-5 bg-slate-900 rounded-b-xl" />
                 </div>
                 <div className="h-full w-full bg-slate-50 flex flex-col pt-12 relative">
-                  <div className="px-5 pb-4">
+                  <div className="px-6 pb-4">
                     <h3 className="text-xl font-semibold tracking-tight text-slate-900">Giriş Yap</h3>
                     <p className="text-sm text-slate-500 mt-1 font-medium">Kamerayı QR koda hizalayın</p>
                   </div>
                   <div className="flex-1 bg-slate-800 relative overflow-hidden">
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 border-2 border-white/50 rounded-2xl">
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-44 h-44 border-2 border-white/50 rounded-2xl">
                       <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-blue-500 rounded-tl-xl" />
                       <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-blue-500 rounded-tr-xl" />
                       <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-blue-500 rounded-bl-xl" />
                       <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-blue-500 rounded-br-xl" />
                       <div className="scanner-line" />
                       <div className="absolute inset-0 flex items-center justify-center p-2">
-                        <div className="bg-white rounded-lg p-2 shadow-inner">
-                          <QrCode strokeWidth={1.5} className="w-20 h-20 text-slate-800" />
-                        </div>
+                        <img src="/qrkapicon2.png" alt="QR" className="w-20 h-20 object-contain bg-white rounded-lg p-1.5" />
                       </div>
                     </div>
                   </div>
@@ -203,7 +201,7 @@ function App() {
                 </div>
               </div>
               <div className="mockup-reflection mockup-reflection-phone" aria-hidden="true">
-                <div className="w-56 h-[400px] bg-slate-100 rounded-[2.5rem] border border-slate-200" />
+                <div className="w-56 h-[460px] sm:w-60 sm:h-[520px] bg-slate-100 rounded-[2.75rem] border border-slate-200" />
               </div>
               </div>
             </motion.div>
@@ -233,8 +231,8 @@ function App() {
                   <div className="w-2.5 h-2.5 rounded-full bg-slate-200" />
                   <div className="w-16 h-1.5 rounded-full bg-slate-100" />
                 </div>
-                <div className="flex-1 rounded-2xl bg-slate-800 flex items-center justify-center relative overflow-hidden border border-slate-700 shadow-inner">
-                  <QrCode strokeWidth={1.5} className="w-24 h-24 text-white/90" />
+                <div className="flex-1 rounded-2xl bg-white flex items-center justify-center relative overflow-hidden border border-slate-200 shadow-inner">
+                  <img src="/qrkapicon.png" alt="QR" className="w-24 h-24 object-contain" />
                   <div className="absolute top-0 left-0 w-full h-[3px] bg-blue-500 shadow-[0_0_15px_#3b82f6] animate-[scan_2s_ease-in-out_infinite_alternate]" />
                 </div>
               </div>
@@ -253,19 +251,19 @@ function App() {
           >
             <motion.div variants={{ hidden: { opacity: 0, x: -40 }, visible: { opacity: 1, x: 0 } }} transition={{ duration: 0.5 }} className="flex justify-center md:justify-end group">
               <div className="mockup-wrapper-with-reflection inline-block">
-              <div className="w-48 h-[340px] bg-white border-[6px] border-slate-900 rounded-[2.5rem] shadow-[0_-12px_28px_-8px_rgba(0,0,0,0.1),0_12px_28px_-8px_rgba(0,0,0,0.1),0_28px_56px_-14px_rgba(0,0,0,0.15)] relative flex flex-col transition-transform duration-500 group-hover:-translate-y-2 overflow-hidden">
+              <div className="w-52 h-[420px] sm:w-52 sm:h-[460px] bg-white border-[6px] border-slate-900 rounded-[2.5rem] shadow-[0_-12px_28px_-8px_rgba(0,0,0,0.1),0_12px_28px_-8px_rgba(0,0,0,0.1),0_28px_56px_-14px_rgba(0,0,0,0.15)] relative flex flex-col transition-transform duration-500 group-hover:-translate-y-2 overflow-hidden">
                 <div className="absolute top-0 inset-x-0 h-4 flex justify-center z-20">
                   <div className="w-16 h-3 bg-slate-900 rounded-b-lg" />
                 </div>
                 <div className="flex-1 bg-slate-50 pt-8 px-4 pb-4 flex flex-col relative">
                   <div className="w-20 h-2 bg-slate-200 rounded-full mb-6 mx-auto" />
                   <div className="flex-1 bg-white rounded-xl border border-slate-100 flex flex-col items-center justify-center relative shadow-sm">
-                    <div className="w-24 h-24 border-2 border-slate-100 rounded-lg relative flex items-center justify-center">
+                    <div className="w-24 h-24 border-2 border-slate-100 rounded-lg relative flex items-center justify-center bg-white p-1">
                       <div className="absolute -top-0.5 -left-0.5 w-3 h-3 border-t-2 border-l-2 border-blue-500 rounded-tl" />
                       <div className="absolute -top-0.5 -right-0.5 w-3 h-3 border-t-2 border-r-2 border-blue-500 rounded-tr" />
                       <div className="absolute -bottom-0.5 -left-0.5 w-3 h-3 border-b-2 border-l-2 border-blue-500 rounded-bl" />
                       <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 border-b-2 border-r-2 border-blue-500 rounded-br" />
-                      <Scan strokeWidth={1.5} className="w-8 h-8 text-slate-300" />
+                      <img src="/qrkapicon2.png" alt="QR" className="w-full h-full object-contain" />
                     </div>
                   </div>
                   <div className="mt-4 flex justify-center">
@@ -275,7 +273,7 @@ function App() {
                   </div>
                 </div>
               </div>
-              <div className="mockup-reflection mockup-reflection-phone" aria-hidden="true"><div className="w-48 h-[340px] bg-slate-100 rounded-[2.5rem]" /></div>
+              <div className="mockup-reflection mockup-reflection-phone" aria-hidden="true"><div className="w-52 h-[420px] sm:h-[460px] bg-slate-100 rounded-[2.5rem]" /></div>
               </div>
             </motion.div>
             <motion.div variants={{ hidden: { opacity: 0, x: 40 }, visible: { opacity: 1, x: 0 } }} transition={{ duration: 0.5 }} className="text-center md:text-left">
@@ -534,18 +532,18 @@ function App() {
                             </div>
                           </div>
                         </div>
-                        <motion.div className="px-3 pt-1.5 pb-1.5 text-center bg-white shrink-0" initial={false} animate={{ opacity: qrScannedAndroid ? 0 : 1, y: qrScannedAndroid ? -4 : 0 }} transition={{ duration: 0.35 }}>
-                          <h3 className="font-display font-bold text-slate-900 text-sm">Giriş Yap</h3>
-                          <p className="text-[10px] text-slate-500 mt-0.5">Kamerayı QR koda hizalayın</p>
-                        </motion.div>
-                        <div className="relative bg-slate-900 flex-1 min-h-[180px] flex items-center justify-center">
+                        <div className="px-3 pt-2 pb-1 text-center bg-white shrink-0">
+                          <p className="font-display font-semibold text-slate-800 text-xs">QR ile giriş</p>
+                          <p className="text-[10px] text-slate-500 mt-0.5">Kodu okutun</p>
+                        </div>
+                        <div className="relative bg-white flex-1 min-h-[180px] flex items-center justify-center">
                           <motion.div
-                            className="relative w-28 h-28 rounded-lg border-2 border-green-500 flex items-center justify-center overflow-hidden"
+                            className="relative w-40 h-40 rounded-xl border-2 border-green-500 flex items-center justify-center overflow-hidden"
                             animate={{ rotate: qrScannedAndroid ? 350 : 0 }}
                             transition={{ duration: qrScannedAndroid ? 0.58 : 0, ease: 'easeInOut' }}
                             onAnimationComplete={() => { if (qrScannedAndroid) { setQrScannedAndroid(false); setQrProgressAndroid(0); } }}
                           >
-                            <div className="bg-white rounded-md p-1"><QrCode strokeWidth={1.5} className="w-16 h-16 text-slate-800" /></div>
+                            <div className="bg-white rounded-lg p-1.5"><img src="/qrkapicon.png" alt="QR" className="w-28 h-28 object-contain" /></div>
                             {qrHoveringAndroid && !qrScannedAndroid && (
                               <>
                                 <div className="absolute left-0 right-0 h-0.5 bg-green-400 rounded-full z-10 shadow-[0_0_6px_#4ade80]" style={{ top: `${qrProgressAndroid}%`, transform: 'translateY(-50%)' }} />
@@ -563,11 +561,8 @@ function App() {
                           <div className="w-24 h-0.5 rounded-full bg-slate-300" />
                         </div>
                       </div>
-                      <motion.div className="mt-1.5 mx-auto w-20 h-0.5 rounded-full bg-slate-800 overflow-hidden shrink-0" initial={false} animate={{ opacity: qrScannedAndroid ? 0 : 1 }} transition={{ duration: 0.25 }}>
-                        <motion.div className="h-full bg-green-500 rounded-full" initial={false} animate={{ width: `${qrProgressAndroid}%` }} transition={{ duration: 0.05 }} />
-                      </motion.div>
                     </div>
-                    <p className="mt-4 text-sm font-medium text-slate-700">Android</p>
+                    <p className="mt-4 text-xl font-bold text-slate-800 font-display">Android</p>
                     <p className="mt-1 text-sm text-slate-500 text-center max-w-[240px]">Terminaldeki QR kodu uygulama ile okutun; giriş otomatik kaydedilir.</p>
                   </div>
 
@@ -600,18 +595,18 @@ function App() {
                             </div>
                           </div>
                         </div>
-                        <motion.div className="px-3 pt-1.5 pb-1.5 text-center bg-white shrink-0" initial={false} animate={{ opacity: qrScannedIOS ? 0 : 1, y: qrScannedIOS ? -4 : 0 }} transition={{ duration: 0.35 }}>
-                          <h3 className="font-display font-bold text-slate-900 text-sm">Giriş Yap</h3>
-                          <p className="text-[10px] text-slate-500 mt-0.5">Kamerayı QR koda hizalayın</p>
-                        </motion.div>
-                        <div className="relative bg-slate-900 flex-1 min-h-[180px] flex items-center justify-center">
+                        <div className="px-3 pt-2 pb-1 text-center bg-white shrink-0">
+                          <p className="font-display font-semibold text-slate-800 text-xs">QR ile giriş</p>
+                          <p className="text-[10px] text-slate-500 mt-0.5">Kodu okutun</p>
+                        </div>
+                        <div className="relative bg-white flex-1 min-h-[180px] flex items-center justify-center">
                           <motion.div
-                            className="relative w-28 h-28 rounded-lg border-2 border-blue-500 flex items-center justify-center overflow-hidden"
+                            className="relative w-40 h-40 rounded-xl border-2 border-blue-500 flex items-center justify-center overflow-hidden"
                             animate={{ rotate: qrScannedIOS ? 350 : 0 }}
                             transition={{ duration: qrScannedIOS ? 0.58 : 0, ease: 'easeInOut' }}
                             onAnimationComplete={() => { if (qrScannedIOS) { setQrScannedIOS(false); setQrProgressIOS(0); } }}
                           >
-                            <div className="bg-white rounded-md p-1"><QrCode strokeWidth={1.5} className="w-16 h-16 text-slate-800" /></div>
+                            <div className="bg-white rounded-lg p-1.5"><img src="/qrkapicon.png" alt="QR" className="w-28 h-28 object-contain" /></div>
                             {qrHoveringIOS && !qrScannedIOS && (
                               <>
                                 <div className="absolute left-0 right-0 h-0.5 bg-blue-400 rounded-full z-10 shadow-[0_0_6px_#60a5fa]" style={{ top: `${qrProgressIOS}%`, transform: 'translateY(-50%)' }} />
@@ -626,11 +621,8 @@ function App() {
                           </div>
                         </motion.div>
                       </div>
-                      <motion.div className="mt-1.5 mx-auto w-20 h-0.5 rounded-full bg-zinc-700 overflow-hidden shrink-0" initial={false} animate={{ opacity: qrScannedIOS ? 0 : 1 }} transition={{ duration: 0.25 }}>
-                        <motion.div className="h-full bg-blue-500 rounded-full" initial={false} animate={{ width: `${qrProgressIOS}%` }} transition={{ duration: 0.05 }} />
-                      </motion.div>
                     </div>
-                    <p className="mt-4 text-sm font-medium text-slate-700">iOS</p>
+                    <p className="mt-4 text-xl font-bold text-slate-800 font-display">iOS</p>
                     <p className="mt-1 text-sm text-slate-500 text-center max-w-[240px]">iPhone ve iPad’de aynı akış; Face ID / Touch ID ile ek güvenlik seçeneği.</p>
                   </div>
                 </div>
@@ -690,19 +682,16 @@ function App() {
             Personel takibini dijitalleştirin ve işletmenizi daha verimli yönetin.
           </h2>
           <p className="text-lg text-slate-600 mb-12 max-w-2xl mx-auto leading-relaxed">
-            Eski nesil sistemlerin bakım maliyetlerinden ve operasyonel yükünden kurtulun. Hemen bugün QRPDKS'ye geçiş yapın.
+            Eski nesil sistemlerin bakım maliyetlerinden ve operasyonel yükünden kurtulun. Hemen bugün QRKAPI'ya geçiş yapın.
           </p>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
             <a href="#" className="font-display w-full sm:w-auto px-8 py-3.5 bg-slate-900 text-white text-base font-semibold rounded-full hover:bg-slate-800 transition-all duration-200 shadow-lg shadow-slate-900/20 hover:scale-[1.02] hover:shadow-xl hover:shadow-slate-900/25">
               Ücretsiz Demo Talep Et
             </a>
-            <a href="https://github.com/alpsungurk/qrkapi" target="_blank" rel="noopener noreferrer" className="font-display w-full sm:w-auto px-8 py-3.5 bg-white text-slate-700 text-base font-semibold border-2 border-slate-200 rounded-full hover:border-slate-300 hover:bg-slate-50 transition-all duration-200 hover:scale-[1.02] hover:shadow-md">
-              GitHub'da Görüntüle
-            </a>
             <a href="#" className="font-display w-full sm:w-auto px-8 py-3.5 bg-white text-slate-700 text-base font-semibold border-2 border-slate-200 rounded-full hover:border-slate-300 hover:bg-slate-50 transition-all duration-200 hover:scale-[1.02] hover:shadow-md">
               Fiyatlandırmayı İncele
             </a>
-          </div>
+      </div>
         </motion.div>
       </section>
 
@@ -710,16 +699,15 @@ function App() {
       <footer className="bg-slate-50 py-16 border-t border-slate-200">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex items-center gap-2">
-            <span className="font-display text-xl font-bold tracking-tight text-slate-900">QRPDKS</span>
+            <img src="/qrkapi.png" alt="QRKAPI" className="h-8 w-auto object-contain" />
           </div>
           <div className="flex gap-8">
-            <a href="https://github.com/alpsungurk/qrkapi" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors tracking-tight">GitHub</a>
             <a href="#" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors tracking-tight">Gizlilik Politikası</a>
             <a href="#" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors tracking-tight">Kullanım Şartları</a>
             <a href="#" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors tracking-tight">İletişim</a>
           </div>
           <div className="text-sm font-medium text-slate-400">
-            &copy; 2023 QRPDKS. Tüm hakları saklıdır.
+            &copy; {new Date().getFullYear()} QRKAPI. Tüm hakları saklıdır.
           </div>
         </div>
       </footer>
