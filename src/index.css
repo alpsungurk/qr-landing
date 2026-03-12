@@ -107,11 +107,82 @@ body {
   50% { transform: translateY(-6px) rotate(-6deg); }
 }
 
+/* Hero arka plan glow — hafif nefes alma animasyonu */
+.hero-bg-glow {
+  animation: heroBgGlow 8s ease-in-out infinite;
+}
+
+.hero-bg-glow-delay {
+  animation-delay: -4s;
+}
+
+@keyframes heroBgGlow {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+
+/* Hero telefon yanındaki orblar — hafif büyüyüp küçülme */
+.hero-orb {
+  animation: heroOrb 6s ease-in-out infinite;
+}
+
+.hero-orb-delay {
+  animation-delay: -3s;
+}
+
+@keyframes heroOrb {
+  0%, 100% { opacity: 0.8; transform: translate(-50%, -50%) scale(0.95); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+}
+
+/* Scroll göstergesi — Dribbble tarzı mikro animasyon */
+.scroll-track {
+  width: 2px;
+  height: 32px;
+  background: rgba(148, 163, 184, 0.35);
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.scroll-track-dot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 8px;
+  background: rgba(71, 85, 105, 0.9);
+  border-radius: 9999px;
+  animation: scrollDot 2s ease-in-out infinite;
+}
+
+@keyframes scrollDot {
+  0%, 25% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(12px); opacity: 0.6; }
+  75% { transform: translateY(24px); opacity: 0.2; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* Form kartı — hafif zıplama (CSS, kasma olmaması için) */
+.form-float {
+  animation: formFloat 3s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes formFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .form-float { animation: none; }
+  .scroll-track-dot { animation: none; }
   .fade-in,
   .hero-float,
   .qr-refresh,
-  .scanner-line {
+  .scanner-line,
+  .hero-bg-glow,
+  .hero-orb {
     animation: none !important;
   }
   .mockup-reflection { opacity: 0.12; }
