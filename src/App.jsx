@@ -791,12 +791,12 @@ function App() {
               <video
                 ref={videoRef}
                 className="absolute inset-0 w-full h-full object-cover"
-                src="/video.mp4"
+                src={`${import.meta.env.BASE_URL}video.mp4`}
                 muted={videoMuted}
                 playsInline
                 loop
                 controls
-                preload="auto"
+                preload="metadata"
               />
               {!videoPlaying && (
                 <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/20">
