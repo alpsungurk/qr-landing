@@ -1,16 +1,23 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Menu } from 'lucide-react'
 
-export default function Navbar({ navScrolled, resetPage }) {
+export default function Navbar({ navScrolled, resetPage, onLogoClick }) {
   const location = useLocation()
+  const navigate = useNavigate()
   const isHome = location.pathname === '/'
+
+  const handleLogoClick = (e) => {
+    e.preventDefault()
+    if (!isHome) navigate('/')
+    onLogoClick?.()
+  }
 
   return (
     <nav className={`fixed top-0 w-full z-50 backdrop-blur-xl border-b transition-all duration-300 ${navScrolled ? 'bg-white/60 border-slate-200/80 shadow-sm' : 'bg-white/50 border-slate-100/80'}`}>
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0 flex items-center">
-            <Link to="/" onClick={resetPage} className="flex items-center cursor-pointer" aria-label="Ana sayfaya dön">
+            <Link to="/" onClick={handleLogoClick} className="flex items-center cursor-pointer" aria-label="Ana sayfaya dön">
               <img src="/qrkapi.png" alt="QR KAPI" className="h-10 sm:h-11 w-auto object-contain" />
             </Link>
           </div>

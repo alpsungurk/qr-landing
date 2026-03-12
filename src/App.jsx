@@ -19,7 +19,6 @@ import {
   CheckCircle2,
   Volume2,
   VolumeX,
-  Mouse,
   CalendarCheck,
   Settings,
 } from 'lucide-react'
@@ -31,7 +30,10 @@ import Iletisim from './pages/Iletisim'
 
 const viewport = { once: false, margin: '-60px' }
 
+const LOADING_DURATION_MS = 5000
+
 function App() {
+  const [showLoading, setShowLoading] = useState(true)
   const [navScrolled, setNavScrolled] = useState(false)
   const [qrShowInfo, setQrShowInfo] = useState(false)
   // Android ayrı state
@@ -146,11 +148,55 @@ function App() {
     setVideoMuted(true)
   }
 
+  // Loading: 5 sn sonra kapat ve reset
+  useEffect(() => {
+    if (!showLoading) return
+    const t = setTimeout(() => {
+      setShowLoading(false)
+      resetPage()
+    }, LOADING_DURATION_MS)
+    return () => clearTimeout(t)
+  }, [showLoading])
+
   return (
     <BrowserRouter>
       <div className="bg-white text-slate-800 antialiased selection:bg-blue-100 selection:text-blue-900">
-        <Navbar navScrolled={navScrolled} resetPage={resetPage} />
-        <Routes>
+        {showLoading && (
+          <div
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-10 px-6 bg-[#eef0f7]"
+          >
+            <motion.div
+              className="relative flex items-center justify-center"
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, ease: [0.22, 0.61, 0.36, 1] }}
+            >
+              <div className="w-40 h-40 sm:w-48 sm:h-48 bg-white rounded-2xl p-3 shadow-xl border border-slate-200/80">
+                <img src="/qrkapicon2.png" alt="QR" className="w-full h-full object-contain" />
+              </div>
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden rounded-2xl">
+                <div className="scanner-line" />
+              </div>
+            </motion.div>
+            <motion.p
+              className="text-slate-600 font-medium text-lg tracking-wide animate-pulse"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4 }}
+            >
+              Yükleniyor
+            </motion.p>
+          </div>
+        )}
+        {!showLoading && (
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: [0.22, 0.61, 0.36, 1] }}
+            className="min-h-full"
+          >
+            <Navbar navScrolled={navScrolled} resetPage={resetPage} onLogoClick={() => setShowLoading(true)} />
+            <Routes>
           <Route path="/" element={
             <>
       {/* Hero Section — mavi reflection (özellikler ile aynı ton) + hafif animasyon */}
@@ -241,13 +287,10 @@ function App() {
               </div>
             </motion.div>
           </div>
-          {/* Scroll göstergesi — aydınlatılmış, aşağıda; Dribbble tarzı mikro animasyon */}
+          {/* Scroll göstergesi — dikey çizgi + Kaydır metni */}
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center justify-center gap-4 pointer-events-none">
             <div className="scroll-track">
               <div className="scroll-track-dot" />
-            </div>
-            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-slate-300/25 border border-slate-300/60 shadow-sm">
-              <Mouse strokeWidth={1.5} className="w-5 h-5 text-slate-500" />
             </div>
             <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500" style={{ writingMode: 'vertical-rl', textOrientation: 'mixed', transform: 'rotate(180deg)' }}>
               Kaydır
@@ -803,7 +846,7 @@ function App() {
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
+              viewport={{ once: false, margin: '-40px' }}
               transition={{ duration: 0.5 }}
               className="text-center lg:text-left"
             >
@@ -833,7 +876,7 @@ function App() {
             <motion.div
               initial={{ opacity: 0, x: 24, scale: 0.96 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
-              viewport={{ once: true, margin: '-40px' }}
+              viewport={{ once: false, margin: '-40px' }}
               transition={{ duration: 0.55, ease: [0.22, 0.61, 0.36, 1] }}
               className="form-float rounded-3xl p-6 sm:p-8 border border-white/10 shadow-2xl shadow-black/10 bg-slate-100/90 backdrop-blur-sm"
             >
@@ -875,7 +918,7 @@ function App() {
             className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-14"
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-30px' }}
+            viewport={{ once: false, margin: '-30px' }}
             transition={{ duration: 0.4 }}
           >
             <div className="rounded-2xl bg-indigo-900/20 backdrop-blur-md border border-indigo-500/25 p-5 text-center shadow-lg">
@@ -907,8 +950,10 @@ function App() {
           <Route path="/gizlilik-politikasi" element={<GizlilikPolitikasi />} />
           <Route path="/kullanim-sartlari" element={<KullanimSartlari />} />
           <Route path="/iletisim" element={<Iletisim />} />
-        </Routes>
-        <Footer />
+            </Routes>
+            <Footer />
+          </motion.div>
+        )}
       </div>
     </BrowserRouter>
   )
