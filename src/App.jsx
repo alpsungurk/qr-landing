@@ -47,11 +47,16 @@ function App() {
   const [videoPlaying, setVideoPlaying] = useState(false)
   const [videoMuted, setVideoMuted] = useState(true)
   const [videoError, setVideoError] = useState(false)
+  const [videoLoadTimeout, setVideoLoadTimeout] = useState(false)
   const videoSectionRef = useRef(null)
   const videoRef = useRef(null)
+  const videoLoadTimeoutRef = useRef(null)
 
-  // Vercel: public/video.mp4 dist'e kopyalanır, root'tan /video.mp4 ile sunulur. VITE_VIDEO_URL ile dış link de verilebilir.
-  const videoSrc = import.meta.env.VITE_VIDEO_URL || '/video.mp4'
+  // VITE_VIDEO_URL: tam link (örn. .../video.mp4) veya Blob base URL (slash ile biten); base ise video.mp4 eklenir.
+  const rawVideoUrl = import.meta.env.VITE_VIDEO_URL || ''
+  const videoSrc = rawVideoUrl
+    ? (rawVideoUrl.endsWith('/') ? `${rawVideoUrl.replace(/\/$/, '')}/video.mp4` : rawVideoUrl)
+    : '/video.mp4'
 
   const scanDurationMs = 1200
   useEffect(() => {
@@ -139,6 +144,15 @@ function App() {
     if (!videoRef.current) return
     videoRef.current.muted = videoMuted
   }, [videoMuted])
+
+  // Video yüklenmezse (takılı kalırsa) 12 sn sonra hata göster
+  useEffect(() => {
+    if (!videoSrc || videoError) return
+    videoLoadTimeoutRef.current = setTimeout(() => setVideoLoadTimeout(true), 12000)
+    return () => {
+      if (videoLoadTimeoutRef.current) clearTimeout(videoLoadTimeoutRef.current)
+    }
+  }, [videoSrc, videoError])
 
   // Nav logo: sayfayı ilk haline getir (scroll + state sıfırla)
   const resetPage = () => {
@@ -793,7 +807,7 @@ function App() {
             transition={{ duration: 0.5 }}
           >
             <div className="relative aspect-video bg-slate-900 min-h-[280px]">
-              {videoError ? (
+              {(videoError || videoLoadTimeout) ? (
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-6 text-center">
                   <div className="w-16 h-16 rounded-full bg-slate-700 flex items-center justify-center">
                     <PlayCircle className="w-8 h-8 text-slate-300" strokeWidth={1.5} />
@@ -825,6 +839,13 @@ function App() {
                     controls
                     preload="auto"
                     onError={() => setVideoError(true)}
+                    onLoadedData={() => {
+                      if (videoLoadTimeoutRef.current) {
+                        clearTimeout(videoLoadTimeoutRef.current)
+                        videoLoadTimeoutRef.current = null
+                      }
+                      setVideoLoadTimeout(false)
+                    }}
                   />
                   {!videoPlaying && (
                     <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/20">
