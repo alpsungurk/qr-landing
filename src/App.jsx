@@ -46,8 +46,12 @@ function App() {
   const [qrScannedIOS, setQrScannedIOS] = useState(false)
   const [videoPlaying, setVideoPlaying] = useState(false)
   const [videoMuted, setVideoMuted] = useState(true)
+  const [videoError, setVideoError] = useState(false)
   const videoSectionRef = useRef(null)
   const videoRef = useRef(null)
+
+  // Vercel/dış host: VITE_VIDEO_URL ile video linki verilebilir (örn. Vercel Blob)
+  const videoSrc = import.meta.env.VITE_VIDEO_URL || `${import.meta.env.BASE_URL}video.mp4`
 
   const scanDurationMs = 1200
   useEffect(() => {
@@ -146,6 +150,7 @@ function App() {
     setQrProgressIOS(0)
     setVideoPlaying(false)
     setVideoMuted(true)
+    setVideoError(false)
   }
 
   // Loading: 5 sn sonra kapat ve reset
@@ -788,31 +793,56 @@ function App() {
             transition={{ duration: 0.5 }}
           >
             <div className="relative aspect-video bg-slate-900 min-h-[280px]">
-              <video
-                ref={videoRef}
-                className="absolute inset-0 w-full h-full object-cover"
-                src={`${import.meta.env.BASE_URL}video.mp4`}
-                muted={videoMuted}
-                playsInline
-                loop
-                controls
-                preload="metadata"
-              />
-              {!videoPlaying && (
-                <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/20">
-                  <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center shadow-lg pointer-events-none">
-                    <PlayCircle className="w-12 h-12 text-slate-800 ml-1" strokeWidth={2} fill="currentColor" />
+              {videoError ? (
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-6 text-center">
+                  <div className="w-16 h-16 rounded-full bg-slate-700 flex items-center justify-center">
+                    <PlayCircle className="w-8 h-8 text-slate-300" strokeWidth={1.5} />
                   </div>
+                  <p className="text-slate-400 text-sm font-medium">Video yüklenemedi</p>
+                  <p className="text-slate-500 text-xs max-w-sm">
+                    Videoyu Vercel Blob veya başka bir hosta yükleyip proje ayarlarında <code className="bg-slate-800 px-1.5 py-0.5 rounded text-slate-300">VITE_VIDEO_URL</code> ile linki ekleyebilirsiniz.
+                  </p>
+                  {import.meta.env.VITE_VIDEO_URL && (
+                    <a
+                      href={videoSrc}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-blue-400 hover:text-blue-300 underline"
+                    >
+                      Videoyu yeni sekmede aç
+                    </a>
+                  )}
                 </div>
+              ) : (
+                <>
+                  <video
+                    ref={videoRef}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    src={videoSrc}
+                    muted={videoMuted}
+                    playsInline
+                    loop
+                    controls
+                    preload="metadata"
+                    onError={() => setVideoError(true)}
+                  />
+                  {!videoPlaying && (
+                    <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/20">
+                      <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center shadow-lg pointer-events-none">
+                        <PlayCircle className="w-12 h-12 text-slate-800 ml-1" strokeWidth={2} fill="currentColor" />
+                      </div>
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setVideoMuted(!videoMuted)}
+                    className="absolute bottom-4 right-4 z-20 w-12 h-12 rounded-full bg-black/50 hover:bg-black/70 flex items-center justify-center text-white transition-colors"
+                    aria-label={videoMuted ? 'Sesi aç' : 'Sesi kapat'}
+                  >
+                    {videoMuted ? <VolumeX className="w-6 h-6" /> : <Volume2 className="w-6 h-6" />}
+                  </button>
+                </>
               )}
-              <button
-                type="button"
-                onClick={() => setVideoMuted(!videoMuted)}
-                className="absolute bottom-4 right-4 z-20 w-12 h-12 rounded-full bg-black/50 hover:bg-black/70 flex items-center justify-center text-white transition-colors"
-                aria-label={videoMuted ? 'Sesi aç' : 'Sesi kapat'}
-              >
-                {videoMuted ? <VolumeX className="w-6 h-6" /> : <Volume2 className="w-6 h-6" />}
-              </button>
             </div>
           </motion.div>
         </div>
