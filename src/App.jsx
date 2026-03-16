@@ -30,6 +30,14 @@ const viewport = { once: false, margin: '-60px' }
 
 const LOADING_DURATION_MS = 5000
 
+// YouTube link veya sadece video ID'den ID çıkar (youtu.be/xxx, watch?v=xxx, embed/xxx)
+function getYoutubeVideoId(input) {
+  const s = (input || '').trim()
+  if (!s) return ''
+  const match = s.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/) || (s.length <= 20 && /^[a-zA-Z0-9_-]+$/.test(s) ? [null, s] : null)
+  return match ? match[1] : ''
+}
+
 function App() {
   const [showLoading, setShowLoading] = useState(true)
   const [navScrolled, setNavScrolled] = useState(false)
@@ -755,10 +763,10 @@ function App() {
             transition={{ duration: 0.5 }}
           >
             <div className="relative aspect-video bg-slate-900 min-h-[280px]">
-              {(import.meta.env.VITE_YOUTUBE_VIDEO_ID || '').trim() ? (
+              {getYoutubeVideoId(import.meta.env.VITE_YOUTUBE_VIDEO_ID) ? (
                 <iframe
                   className="absolute inset-0 w-full h-full"
-                  src={`https://www.youtube.com/embed/${(import.meta.env.VITE_YOUTUBE_VIDEO_ID || '').trim()}?rel=0`}
+                  src={`https://www.youtube.com/embed/${getYoutubeVideoId(import.meta.env.VITE_YOUTUBE_VIDEO_ID)}?rel=0`}
                   title="Demo video"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
