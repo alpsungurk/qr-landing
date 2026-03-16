@@ -17,8 +17,6 @@ import {
   MapPin,
   Server,
   CheckCircle2,
-  Volume2,
-  VolumeX,
   CalendarCheck,
   Settings,
 } from 'lucide-react'
@@ -44,19 +42,6 @@ function App() {
   const [qrHoveringIOS, setQrHoveringIOS] = useState(false)
   const [qrProgressIOS, setQrProgressIOS] = useState(0)
   const [qrScannedIOS, setQrScannedIOS] = useState(false)
-  const [videoPlaying, setVideoPlaying] = useState(false)
-  const [videoMuted, setVideoMuted] = useState(true)
-  const [videoError, setVideoError] = useState(false)
-  const [videoLoadTimeout, setVideoLoadTimeout] = useState(false)
-  const videoSectionRef = useRef(null)
-  const videoRef = useRef(null)
-  const videoLoadTimeoutRef = useRef(null)
-
-  // Video: production'da /api/video proxy (CORS yok), local'de Blob URL (Vite'da api yok).
-  const videoSrc = import.meta.env.DEV
-    ? 'https://okh0cfodr9tauxyp.public.blob.vercel-storage.com/video.mp4'
-    : '/api/video'
-
   const scanDurationMs = 1200
   useEffect(() => {
     if (!qrHoveringAndroid) return
@@ -116,42 +101,6 @@ function App() {
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
-
-  // Video: viewport'a girince otomatik oynat (sessiz)
-  useEffect(() => {
-    const el = videoSectionRef.current
-    if (!el) return
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries
-        setVideoPlaying(entry.isIntersecting)
-      },
-      { threshold: 0.25, rootMargin: '0px' }
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
-
-  useEffect(() => {
-    if (!videoPlaying || !videoRef.current) return
-    const v = videoRef.current
-    v.muted = true
-    v.play().catch(() => {})
-  }, [videoPlaying])
-
-  useEffect(() => {
-    if (!videoRef.current) return
-    videoRef.current.muted = videoMuted
-  }, [videoMuted])
-
-  // Video yüklenmezse (takılı kalırsa) 12 sn sonra hata göster
-  useEffect(() => {
-    if (!videoSrc || videoError) return
-    videoLoadTimeoutRef.current = setTimeout(() => setVideoLoadTimeout(true), 12000)
-    return () => {
-      if (videoLoadTimeoutRef.current) clearTimeout(videoLoadTimeoutRef.current)
-    }
-  }, [videoSrc, videoError])
 
   // Nav logo: sayfayı ilk haline getir (scroll + state sıfırla)
   const resetPage = () => {
@@ -795,8 +744,8 @@ function App() {
         </div>
       </section>
 
-      {/* Video Section — kapak videodan (ilk kare) */}
-      <section id="video" ref={videoSectionRef} className="py-20 bg-slate-50/60">
+      {/* Video Section — YouTube embed */}
+      <section id="video" className="py-20 bg-slate-50/60">
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <motion.div
             className="bg-white rounded-2xl shadow-xl shadow-slate-200/80 overflow-hidden"
@@ -806,62 +755,20 @@ function App() {
             transition={{ duration: 0.5 }}
           >
             <div className="relative aspect-video bg-slate-900 min-h-[280px]">
-              {(videoError || videoLoadTimeout) ? (
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-6 text-center">
-                  <div className="w-16 h-16 rounded-full bg-slate-700 flex items-center justify-center">
-                    <PlayCircle className="w-8 h-8 text-slate-300" strokeWidth={1.5} />
-                  </div>
-                  <p className="text-slate-400 text-sm font-medium">Video yüklenemedi</p>
-                  <p className="text-slate-500 text-xs max-w-sm">
-                    Videoyu Vercel Blob veya başka bir hosta yükleyip proje ayarlarında <code className="bg-slate-800 px-1.5 py-0.5 rounded text-slate-300">VITE_VIDEO_URL</code> ile linki ekleyebilirsiniz.
-                  </p>
-                  {import.meta.env.VITE_VIDEO_URL && (
-                    <a
-                      href={videoSrc}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-blue-400 hover:text-blue-300 underline"
-                    >
-                      Videoyu yeni sekmede aç
-                    </a>
-                  )}
-                </div>
+              {(import.meta.env.VITE_YOUTUBE_VIDEO_ID || '').trim() ? (
+                <iframe
+                  className="absolute inset-0 w-full h-full"
+                  src={`https://www.youtube.com/embed/${(import.meta.env.VITE_YOUTUBE_VIDEO_ID || '').trim()}?rel=0`}
+                  title="Demo video"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
               ) : (
-                <>
-                  <video
-                    ref={videoRef}
-                    className="absolute inset-0 w-full h-full object-cover"
-                    src={videoSrc}
-                    muted={videoMuted}
-                    playsInline
-                    loop
-                    controls
-                    preload="auto"
-                    onError={() => setVideoError(true)}
-                    onLoadedData={() => {
-                      if (videoLoadTimeoutRef.current) {
-                        clearTimeout(videoLoadTimeoutRef.current)
-                        videoLoadTimeoutRef.current = null
-                      }
-                      setVideoLoadTimeout(false)
-                    }}
-                  />
-                  {!videoPlaying && (
-                    <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/20">
-                      <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center shadow-lg pointer-events-none">
-                        <PlayCircle className="w-12 h-12 text-slate-800 ml-1" strokeWidth={2} fill="currentColor" />
-                      </div>
-                    </div>
-                  )}
-                  <button
-                    type="button"
-                    onClick={() => setVideoMuted(!videoMuted)}
-                    className="absolute bottom-4 right-4 z-20 w-12 h-12 rounded-full bg-black/50 hover:bg-black/70 flex items-center justify-center text-white transition-colors"
-                    aria-label={videoMuted ? 'Sesi aç' : 'Sesi kapat'}
-                  >
-                    {videoMuted ? <VolumeX className="w-6 h-6" /> : <Volume2 className="w-6 h-6" />}
-                  </button>
-                </>
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center text-slate-400">
+                  <PlayCircle className="w-14 h-14 text-slate-600" strokeWidth={1.5} />
+                  <p className="text-sm font-medium">YouTube video ID ekleyin</p>
+                  <p className="text-xs max-w-sm">.env dosyasına <code className="bg-slate-800 px-1.5 py-0.5 rounded text-slate-300">VITE_YOUTUBE_VIDEO_ID=videoid</code> yazın (örn. link youtu.be/abc123 ise id: abc123)</p>
+                </div>
               )}
             </div>
           </motion.div>
