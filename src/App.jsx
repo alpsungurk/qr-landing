@@ -52,11 +52,14 @@ function App() {
   const videoRef = useRef(null)
   const videoLoadTimeoutRef = useRef(null)
 
-  // VITE_VIDEO_URL: tam link (örn. .../video.mp4) veya Blob base URL (slash ile biten); base ise video.mp4 eklenir.
-  const rawVideoUrl = import.meta.env.VITE_VIDEO_URL || ''
-  const videoSrc = rawVideoUrl
-    ? (rawVideoUrl.endsWith('/') ? `${rawVideoUrl.replace(/\/$/, '')}/video.mp4` : rawVideoUrl)
-    : '/video.mp4'
+  // Video: VITE_VIDEO_URL (trim) veya Vercel Blob yedeği; Vercel'de env bazen build'e gelmez, Blob URL kesin çalışsın diye yedek.
+  const BLOB_VIDEO_URL = 'https://okh0cfodr9tauxyp.public.blob.vercel-storage.com/video.mp4'
+  const rawVideoUrl = (import.meta.env.VITE_VIDEO_URL || '').trim()
+  const videoSrc = (() => {
+    if (!rawVideoUrl) return BLOB_VIDEO_URL
+    if (rawVideoUrl.endsWith('/')) return `${rawVideoUrl.replace(/\/+$/, '')}/video.mp4`
+    return rawVideoUrl
+  })()
 
   const scanDurationMs = 1200
   useEffect(() => {
