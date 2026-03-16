@@ -766,7 +766,7 @@ function App() {
               {getYoutubeVideoId(import.meta.env.VITE_YOUTUBE_VIDEO_ID) ? (
                 <iframe
                   className="absolute inset-0 w-full h-full"
-                  src={`https://www.youtube.com/embed/${getYoutubeVideoId(import.meta.env.VITE_YOUTUBE_VIDEO_ID)}?rel=0`}
+                  src={`https://www.youtube.com/embed/${getYoutubeVideoId(import.meta.env.VITE_YOUTUBE_VIDEO_ID)}?rel=0&modestbranding=1&iv_load_policy=3`}
                   title="Demo video"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
