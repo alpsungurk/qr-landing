@@ -50,8 +50,8 @@ function App() {
   const videoSectionRef = useRef(null)
   const videoRef = useRef(null)
 
-  // Vercel/dış host: VITE_VIDEO_URL ile video linki verilebilir (örn. Vercel Blob)
-  const videoSrc = import.meta.env.VITE_VIDEO_URL || `${import.meta.env.BASE_URL}video.mp4`
+  // Vercel: public/video.mp4 dist'e kopyalanır, root'tan /video.mp4 ile sunulur. VITE_VIDEO_URL ile dış link de verilebilir.
+  const videoSrc = import.meta.env.VITE_VIDEO_URL || '/video.mp4'
 
   const scanDurationMs = 1200
   useEffect(() => {
@@ -823,7 +823,7 @@ function App() {
                     playsInline
                     loop
                     controls
-                    preload="metadata"
+                    preload="auto"
                     onError={() => setVideoError(true)}
                   />
                   {!videoPlaying && (
