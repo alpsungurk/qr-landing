@@ -35,7 +35,14 @@ body {
   height: 2px;
   background-color: #3b82f6;
   box-shadow: 0 0 10px #3b82f6;
-  animation: scan 2s infinite linear alternate;
+  animation: scan-fast 0.8s infinite linear alternate;
+}
+
+@keyframes scan-fast {
+  0% { top: 0%; opacity: 0; }
+  5% { opacity: 1; }
+  95% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
 }
 
 @keyframes scan {
@@ -43,6 +50,17 @@ body {
   10% { opacity: 1; }
   90% { opacity: 1; }
   100% { top: 100%; opacity: 0; }
+}
+
+.scanner-line-slow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #3b82f6;
+  box-shadow: 0 0 10px #3b82f6;
+  animation: scan 2s infinite linear alternate;
 }
 
 .qr-refresh {

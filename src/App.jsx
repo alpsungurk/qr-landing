@@ -28,7 +28,7 @@ import Iletisim from './pages/Iletisim'
 
 const viewport = { once: false, margin: '-60px' }
 
-const LOADING_DURATION_MS = 5000
+const LOADING_DURATION_MS = 800
 
 // YouTube link veya sadece video ID'den ID çıkar (youtu.be/xxx, watch?v=xxx, embed/xxx)
 function getYoutubeVideoId(input) {
@@ -51,6 +51,7 @@ function App() {
   const [qrProgressIOS, setQrProgressIOS] = useState(0)
   const [qrScannedIOS, setQrScannedIOS] = useState(false)
   const scanDurationMs = 1200
+  const [isSubmitting, setIsSubmitting] = useState(false)
   useEffect(() => {
     if (!qrHoveringAndroid) return
     const start = performance.now()
@@ -121,6 +122,38 @@ function App() {
     setVideoPlaying(false)
     setVideoMuted(true)
     setVideoError(false)
+  }
+
+  const handleDemoSubmit = async (e) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+
+    const formData = {
+      name: e.target.name.value,
+      email: e.target.email.value,
+      phone: e.target.phone.value,
+      company: e.target.company.value,
+      message: e.target.message.value
+    }
+
+    try {
+      const response = await fetch('/api/demo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+
+      if (response.ok) {
+        alert('✅ Demo talebiniz alındı! Ekibimiz 24 saat içinde sizinle iletişime geçecek.')
+        e.target.reset()
+      } else {
+        alert('❌ Bir hata oluştu. Lütfen tekrar deneyin veya bize ulaşın.')
+      }
+    } catch (error) {
+      alert('❌ Bağlantı hatası. Lütfen internet bağlantınızı kontrol edin.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   // Loading: 5 sn sonra kapat ve reset
@@ -243,7 +276,7 @@ function App() {
                       <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-blue-500 rounded-tr-xl" />
                       <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-blue-500 rounded-bl-xl" />
                       <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-blue-500 rounded-br-xl" />
-                      <div className="scanner-line" />
+                      <div className="scanner-line-slow" />
                       <div className="absolute inset-0 flex items-center justify-center p-2">
                         <img src="/qrkapicon2.png" alt="QR" className="w-20 h-20 object-contain bg-white rounded-lg p-1.5" />
                       </div>
@@ -795,8 +828,8 @@ function App() {
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
             <a href="#demo-form" className="inline-flex items-center justify-center w-full sm:w-auto px-8 py-3.5 bg-slate-800 text-white text-base font-semibold rounded-lg hover:bg-slate-700 transition-colors shadow-sm">
               Ücretsiz Demo Talep Et
-            </a>
-          </div>
+        </a>
+      </div>
           <p className="mt-6 text-sm text-slate-500 max-w-md mx-auto">
             Ücretsiz deneme. Kredi kartı gerekmez — uzman ekibimiz sizinle iletişime geçer.
           </p>
@@ -845,36 +878,50 @@ function App() {
               transition={{ duration: 0.55, ease: [0.22, 0.61, 0.36, 1] }}
               className="form-float rounded-3xl p-6 sm:p-8 border border-white/10 shadow-2xl shadow-black/10 bg-slate-100/90 backdrop-blur-sm"
             >
-              <form onSubmit={(e) => e.preventDefault()} className="space-y-5">
+              <form onSubmit={handleDemoSubmit} className="space-y-5">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <input
                     type="text"
+                    name="name"
                     placeholder="Ad Soyad"
+                    required
                     className="w-full px-4 py-3.5 rounded-xl bg-white/70 text-slate-800 placeholder:text-slate-500 border border-slate-200/80 outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400 transition-all"
                   />
                   <input
                     type="email"
+                    name="email"
                     placeholder="E-posta"
+                    required
                     className="w-full px-4 py-3.5 rounded-xl bg-white/70 text-slate-800 placeholder:text-slate-500 border border-slate-200/80 outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400 transition-all"
                   />
                 </div>
                 <input
+                  type="tel"
+                  name="phone"
+                  placeholder="Telefon"
+                  required
+                  className="w-full px-4 py-3.5 rounded-xl bg-white/70 text-slate-800 placeholder:text-slate-500 border border-slate-200/80 outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400 transition-all"
+                />
+                <input
                   type="text"
+                  name="company"
                   placeholder="Şirket / Kurum"
                   className="w-full px-4 py-3.5 rounded-xl bg-white/70 text-slate-800 placeholder:text-slate-500 border border-slate-200/80 outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400 transition-all"
                 />
                 <textarea
                   rows={4}
+                  name="message"
                   placeholder="Mesajınız (isteğe bağlı)"
                   className="w-full px-4 py-3.5 rounded-xl bg-white/70 text-slate-800 placeholder:text-slate-500 border border-slate-200/80 outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400 resize-none transition-all"
                 />
                 <button
                   type="submit"
-                  className="w-full py-4 rounded-xl bg-slate-800 text-white font-semibold text-base flex items-center justify-center gap-2 hover:bg-slate-700 transition-colors shadow-lg border border-slate-700/50"
+                  disabled={isSubmitting}
+                  className="w-full py-4 rounded-xl bg-slate-800 text-white font-semibold text-base flex items-center justify-center gap-2 hover:bg-slate-700 transition-colors shadow-lg border border-slate-700/50 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Talebi Gönder
+                  {isSubmitting ? 'Gönderiliyor...' : 'Talebi Gönder'}
                   <ArrowRight className="w-5 h-5" strokeWidth={2.5} />
-                </button>
+        </button>
               </form>
             </motion.div>
           </div>
