@@ -19,6 +19,7 @@ import {
   CheckCircle2,
   CalendarCheck,
   Settings,
+  XCircle,
 } from 'lucide-react'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -52,6 +53,9 @@ function App() {
   const [qrScannedIOS, setQrScannedIOS] = useState(false)
   const scanDurationMs = 1200
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [showErrorModal, setShowErrorModal] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
   useEffect(() => {
     if (!qrHoveringAndroid) return
     const start = performance.now()
@@ -144,13 +148,15 @@ function App() {
       })
 
       if (response.ok) {
-        alert('✅ Demo talebiniz alındı! Ekibimiz 24 saat içinde sizinle iletişime geçecek.')
+        setShowSuccessModal(true)
         e.target.reset()
       } else {
-        alert('❌ Bir hata oluştu. Lütfen tekrar deneyin veya bize ulaşın.')
+        setErrorMessage('Bir hata oluştu. Lütfen tekrar deneyin veya bize ulaşın.')
+        setShowErrorModal(true)
       }
     } catch (error) {
-      alert('❌ Bağlantı hatası. Lütfen internet bağlantınızı kontrol edin.')
+      setErrorMessage('Bağlantı hatası. Lütfen internet bağlantınızı kontrol edin.')
+      setShowErrorModal(true)
     } finally {
       setIsSubmitting(false)
     }
@@ -957,6 +963,59 @@ function App() {
           </motion.div>
         </div>
       </section>
+
+      {/* Success Modal */}
+      {showSuccessModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={() => setShowSuccessModal(false)}>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            transition={{ duration: 0.3, ease: [0.22, 0.61, 0.36, 1] }}
+            className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 text-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle2 className="w-10 h-10 text-green-600" strokeWidth={2} />
+            </div>
+            <h3 className="text-2xl font-bold text-slate-800 mb-2">Demo talebiniz alındı!</h3>
+            <p className="text-slate-600 mb-6">Ekibimiz 24 saat içinde sizinle iletişime geçecek.</p>
+            <button
+              onClick={() => setShowSuccessModal(false)}
+              className="w-full py-3 bg-slate-800 text-white font-semibold rounded-xl hover:bg-slate-700 transition-colors"
+            >
+              Tamam
+            </button>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Error Modal */}
+      {showErrorModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={() => setShowErrorModal(false)}>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            transition={{ duration: 0.3, ease: [0.22, 0.61, 0.36, 1] }}
+            className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 text-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <XCircle className="w-10 h-10 text-red-600" strokeWidth={2} />
+            </div>
+            <h3 className="text-2xl font-bold text-slate-800 mb-2">Bir sorun oluştu</h3>
+            <p className="text-slate-600 mb-6">{errorMessage}</p>
+            <button
+              onClick={() => setShowErrorModal(false)}
+              className="w-full py-3 bg-slate-800 text-white font-semibold rounded-xl hover:bg-slate-700 transition-colors"
+            >
+              Tamam
+            </button>
+          </motion.div>
+        </div>
+      )}
+
             </>
           } />
           <Route path="/gizlilik-politikasi" element={<GizlilikPolitikasi />} />
