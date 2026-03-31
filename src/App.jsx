@@ -132,10 +132,20 @@ function App() {
     e.preventDefault()
     setIsSubmitting(true)
 
+    const phone = e.target.phone.value.trim()
+    const phoneDigits = phone.replace(/\D/g, '')
+    
+    if (phoneDigits.length < 10) {
+      setErrorMessage('Lütfen geçerli bir telefon numarası girin (en az 10 hane).')
+      setShowErrorModal(true)
+      setIsSubmitting(false)
+      return
+    }
+
     const formData = {
       name: e.target.name.value,
       email: e.target.email.value,
-      phone: e.target.phone.value,
+      phone: phone,
       company: e.target.company.value,
       message: e.target.message.value
     }
@@ -979,7 +989,7 @@ function App() {
               <CheckCircle2 className="w-10 h-10 text-green-600" strokeWidth={2} />
             </div>
             <h3 className="text-2xl font-bold text-slate-800 mb-2">Demo talebiniz alındı!</h3>
-            <p className="text-slate-600 mb-6">Ekibimiz 24 saat içinde sizinle iletişime geçecek.</p>
+            <p className="text-slate-600 mb-6">Ekibimiz sizinle iletişime geçecek.</p>
             <button
               onClick={() => setShowSuccessModal(false)}
               className="w-full py-3 bg-slate-800 text-white font-semibold rounded-xl hover:bg-slate-700 transition-colors"
