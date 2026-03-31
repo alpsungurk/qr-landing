@@ -12,6 +12,16 @@ export default function Navbar({ navScrolled, resetPage, onLogoClick }) {
     onLogoClick?.()
   }
 
+  const handleDemoClick = (e) => {
+    if (!isHome) {
+      e.preventDefault()
+      navigate('/')
+      setTimeout(() => {
+        document.getElementById('demo-form')?.scrollIntoView({ behavior: 'smooth' })
+      }, 100)
+    }
+  }
+
   return (
     <nav className={`fixed top-0 w-full z-50 backdrop-blur-xl border-b transition-all duration-300 ${navScrolled ? 'bg-white/60 border-slate-200/80 shadow-sm' : 'bg-white/50 border-slate-100/80'}`}>
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -39,7 +49,11 @@ export default function Navbar({ navScrolled, resetPage, onLogoClick }) {
             )}
           </div>
           <div className="hidden md:flex items-center">
-            <Link to="/#demo-form" className="inline-flex items-center justify-center text-sm font-semibold text-white bg-slate-800 hover:bg-slate-700 px-5 py-2.5 rounded-lg transition-colors shadow-sm">Demo Talep Et</Link>
+            {isHome ? (
+              <a href="#demo-form" className="inline-flex items-center justify-center text-sm font-semibold text-white bg-slate-800 hover:bg-slate-700 px-5 py-2.5 rounded-lg transition-colors shadow-sm">Demo Talep Et</a>
+            ) : (
+              <Link to="/#demo-form" onClick={handleDemoClick} className="inline-flex items-center justify-center text-sm font-semibold text-white bg-slate-800 hover:bg-slate-700 px-5 py-2.5 rounded-lg transition-colors shadow-sm">Demo Talep Et</Link>
+            )}
           </div>
           <div className="md:hidden flex items-center">
             <button className="text-slate-500 hover:text-slate-900" type="button" aria-label="Menü">

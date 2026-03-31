@@ -914,8 +914,13 @@ function App() {
                 <input
                   type="tel"
                   name="phone"
-                  placeholder="Telefon"
+                  placeholder="Telefon (örn: 5XX XXX XX XX)"
                   required
+                  maxLength="13"
+                  pattern="[0-9\s]*"
+                  onInput={(e) => {
+                    e.target.value = e.target.value.replace(/[^0-9\s]/g, '')
+                  }}
                   className="w-full px-4 py-3.5 rounded-xl bg-white/70 text-slate-800 placeholder:text-slate-500 border border-slate-200/80 outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400 transition-all"
                 />
                 <input
