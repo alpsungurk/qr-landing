@@ -249,9 +249,15 @@ function App() {
                 hidden: {},
               }}
             >
-              <motion.h1 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.5 }} className="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-[3.5rem] font-bold tracking-tight text-slate-900 leading-[1.08]">
+              <motion.p
+                role="heading"
+                aria-level={1}
+                variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+                transition={{ duration: 0.5 }}
+                className="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-[3.5rem] font-bold tracking-tight text-slate-900 leading-[1.08]"
+              >
                 QR Kapı Sistemi: QR ile güvenli giriş, <span className="bg-gradient-to-r from-blue-600 to-blue-500 text-transparent bg-clip-text">tek ekrandan</span> takip
-              </motion.h1>
+              </motion.p>
               <motion.p variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.5 }} className="mt-6 text-lg sm:text-xl text-slate-600 leading-[1.65] max-w-xl">
                 QR kapı sistemi: mobil uygulama ile terminaldeki QR kodunu okutun; giriş çıkışlar anında kaydedilsin. QRKapi ile temassız giriş, raporlar ve geçmiş tek panelde.
               </motion.p>
