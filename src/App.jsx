@@ -259,7 +259,7 @@ function App() {
                 QR kapı geçiş sistemleri — QR ile güvenli giriş, <span className="bg-gradient-to-r from-blue-600 to-blue-500 text-transparent bg-clip-text">tek ekrandan</span> takip
               </motion.p>
               <motion.p variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.5 }} className="mt-6 text-lg sm:text-xl text-slate-600 leading-[1.65] max-w-xl">
-                QR kapı geçiş sistemleri için uçtan uca çözüm: mobil uygulama ile terminaldeki QR kodunu okutun; QR ile kapı açma ve giriş çıkışlar anında kaydedilsin. QRKapi ile temassız geçiş ve tek panelden rapor.
+                QR kapı geçiş sistemleri için QRKapi: temassız giriş, QR kod ile kapı açma, personel takibi ve tek panelden rapor. Mobil uygulama ile terminaldeki QR kodunu okutun; giriş çıkışlar anında kaydedilsin.
               </motion.p>
               <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.5 }} className="mt-10 flex flex-col sm:flex-row gap-4">
                 <a href="#demo-form" className="inline-flex justify-center items-center gap-2 text-base font-semibold text-white bg-slate-800 hover:bg-slate-700 px-6 py-3.5 rounded-lg transition-colors shadow-sm">
