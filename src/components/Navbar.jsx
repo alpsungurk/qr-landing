@@ -36,15 +36,15 @@ export default function Navbar({ navScrolled, resetPage, onLogoClick }) {
               <>
                 <a href="#ozellikler" className="text-sm font-semibold text-slate-800 hover:text-blue-600 transition-colors [text-shadow:0_0_20px_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.05)]">Özellikler</a>
                 <a href="#nasil-calisir" className="text-sm font-semibold text-slate-800 hover:text-blue-600 transition-colors [text-shadow:0_0_20px_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.05)]">Nasıl Çalışır</a>
-                <a href="#guvenlik" className="text-sm font-semibold text-slate-800 hover:text-blue-600 transition-colors [text-shadow:0_0_20px_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.05)]">Güvenlik</a>
                 <a href="#panel" className="text-sm font-semibold text-slate-800 hover:text-blue-600 transition-colors [text-shadow:0_0_20px_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.05)]">Özet</a>
+                <a href="#guvenlik" className="text-sm font-semibold text-slate-800 hover:text-blue-600 transition-colors [text-shadow:0_0_20px_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.05)]">Güvenlik</a>
               </>
             ) : (
               <>
                 <Link to="/#ozellikler" className="text-sm font-semibold text-slate-800 hover:text-blue-600 transition-colors">Özellikler</Link>
                 <Link to="/#nasil-calisir" className="text-sm font-semibold text-slate-800 hover:text-blue-600 transition-colors">Nasıl Çalışır</Link>
-                <Link to="/#guvenlik" className="text-sm font-semibold text-slate-800 hover:text-blue-600 transition-colors">Güvenlik</Link>
                 <Link to="/#panel" className="text-sm font-semibold text-slate-800 hover:text-blue-600 transition-colors">Özet</Link>
+                <Link to="/#guvenlik" className="text-sm font-semibold text-slate-800 hover:text-blue-600 transition-colors">Güvenlik</Link>
               </>
             )}
           </div>
