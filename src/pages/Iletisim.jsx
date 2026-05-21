@@ -10,7 +10,7 @@ export default function Iletisim() {
       document.getElementById('demo-form')?.scrollIntoView({ behavior: 'smooth' })
     }, 100)
   }
-
+ 
   return (
     <main className="pt-28 pb-16 px-6 bg-white">
       <div className="max-w-4xl mx-auto">
