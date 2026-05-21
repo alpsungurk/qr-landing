@@ -123,9 +123,6 @@ function App() {
     setQrShowInfo(false)
     setQrProgressAndroid(0)
     setQrProgressIOS(0)
-    setVideoPlaying(false)
-    setVideoMuted(true)
-    setVideoError(false)
   }
 
   const handleDemoSubmit = async (e) => {
@@ -808,29 +805,33 @@ function App() {
       </section>
 
       {/* Video Section — YouTube embed */}
-      <section id="video" className="py-20 bg-slate-50/60">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8">
+      <section id="video" className="py-12 sm:py-20 bg-slate-50/60">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-4 sm:mb-6 text-center sm:text-left">
+            <h2 className="font-display text-xl sm:text-2xl font-bold text-slate-900">Demo video</h2>
+            <p className="text-sm text-slate-600 mt-1">QRKapi kullanımını kısaca izleyin</p>
+          </div>
           <motion.div
-            className="bg-white rounded-2xl shadow-xl shadow-slate-200/80 overflow-hidden"
+            className="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl shadow-slate-200/80 overflow-hidden ring-1 ring-slate-200/80 sm:ring-0"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={viewport}
             transition={{ duration: 0.5 }}
           >
-            <div className="relative aspect-video bg-slate-900 min-h-[280px]">
+            <div className="relative w-full aspect-[16/10] sm:aspect-video bg-slate-900 max-h-[min(72vw,420px)] sm:max-h-none">
               {getYoutubeVideoId(import.meta.env.VITE_YOUTUBE_VIDEO_ID) ? (
                 <iframe
                   className="absolute inset-0 w-full h-full"
-                  src={`https://www.youtube.com/embed/${getYoutubeVideoId(import.meta.env.VITE_YOUTUBE_VIDEO_ID)}?rel=0&modestbranding=1&iv_load_policy=3`}
+                  src={`https://www.youtube.com/embed/${getYoutubeVideoId(import.meta.env.VITE_YOUTUBE_VIDEO_ID)}?rel=0&modestbranding=1&iv_load_policy=3&playsinline=1`}
                   title="Demo video"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
                 />
               ) : (
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center text-slate-400">
-                  <PlayCircle className="w-14 h-14 text-slate-600" strokeWidth={1.5} />
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-4 sm:p-6 text-center text-slate-400">
+                  <PlayCircle className="w-12 h-12 sm:w-14 sm:h-14 text-slate-600" strokeWidth={1.5} />
                   <p className="text-sm font-medium">YouTube video ID ekleyin</p>
-                  <p className="text-xs max-w-sm">.env dosyasına <code className="bg-slate-800 px-1.5 py-0.5 rounded text-slate-300">VITE_YOUTUBE_VIDEO_ID=videoid</code> yazın (örn. link youtu.be/abc123 ise id: abc123)</p>
+                  <p className="text-xs max-w-sm px-2">.env dosyasına <code className="bg-slate-800 px-1.5 py-0.5 rounded text-slate-300">VITE_YOUTUBE_VIDEO_ID=videoid</code> yazın</p>
                 </div>
               )}
             </div>
