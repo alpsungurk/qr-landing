@@ -24,6 +24,7 @@ import {
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import GizlilikPolitikasi from './pages/GizlilikPolitikasi'
+import KvkkAydinlatma from './pages/KvkkAydinlatma'
 import KullanimSartlari from './pages/KullanimSartlari'
 import Iletisim from './pages/Iletisim'
 
@@ -1041,7 +1042,10 @@ function App() {
             </>
           } />
           <Route path="/gizlilik-politikasi" element={<GizlilikPolitikasi />} />
+          <Route path="/gizlilik" element={<GizlilikPolitikasi />} />
+          <Route path="/kvkk" element={<KvkkAydinlatma />} />
           <Route path="/kullanim-sartlari" element={<KullanimSartlari />} />
+          <Route path="/kosullar" element={<KullanimSartlari />} />
           <Route path="/iletisim" element={<Iletisim />} />
             </Routes>
             <Footer />

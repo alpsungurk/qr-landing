@@ -1,94 +1,110 @@
+import { Link } from 'react-router-dom'
+import { LEGAL } from '../config/legal'
+import { LegalPageShell, LegalSection } from '../components/legal/LegalSection'
+
 export default function KullanimSartlari() {
   return (
-    <main className="pt-28 pb-16 px-6 bg-white">
-      <div className="max-w-4xl mx-auto">
-        <header className="mb-10">
-          <h1 className="font-display text-3xl sm:text-4xl font-bold text-slate-900">Kullanım Şartları</h1>
-          <p className="text-slate-600 mt-3 max-w-3xl">
-            Bu metin, QRKapi (QR KAPI) web sitesi ve hizmetlerinin kullanımına ilişkin şartları açıklar. Hizmeti
-            kullanarak bu şartları kabul etmiş olursunuz.
-          </p>
-          <p className="text-slate-500 text-sm mt-4">
-            Son güncelleme: {new Date().toLocaleDateString('tr-TR')}
-          </p>
-        </header>
+    <LegalPageShell
+      title="Kullanım Koşulları"
+      intro={
+        <p>
+          Bu Kullanım Koşulları (&quot;Koşullar&quot;), QRKapı web uygulamasına (&quot;Hizmet&quot;) erişim ve kullanımını
+          düzenler. Hizmete giriş yaparak veya kullanarak bu Koşulları okuduğunuzu ve kabul ettiğinizi beyan edersiniz.
+        </p>
+      }
+    >
+      <LegalSection title="3.1 Taraflar ve kapsam">
+        <p>
+          Hizmet, <strong>{LEGAL.companyName}</strong> tarafından; personel veya yetkili kullanıcıların QR geçiş kayıtlarını,
+          kullanıcı yönetimini ve ilgili operasyonel işlevleri kullanması amacıyla sunulur.
+        </p>
+      </LegalSection>
 
-        <div className="space-y-6">
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="font-display text-xl font-semibold text-slate-900">1) Tanımlar</h2>
-            <p className="text-slate-600 mt-2">
-              “Hizmet” QRKapi tarafından sunulan QR kapı geçiş sistemleri, web paneli ve ilgili yazılımları ifade eder.
-              “Müşteri” hizmeti iş amaçlı kullanan kurum/işletmeyi, “Kullanıcı” ise müşteri adına sistemi kullanan kişiyi ifade eder.
-            </p>
-          </section>
+      <LegalSection title="3.2 Hesap ve erişim">
+        <ul>
+          <li>Panele erişim, kurum tarafından tanımlanan e-posta ve şifre ile sağlanır.</li>
+          <li>
+            Hesap bilgilerinizin gizliliğinden siz sorumlusunuz; şüpheli kullanımda derhal kurumunuzdaki yetkililere bildirmeniz
+            gerekir.
+          </li>
+          <li>Yetkiniz olmayan rollere veya verilere erişmeye çalışmak yasaktır.</li>
+        </ul>
+      </LegalSection>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="font-display text-xl font-semibold text-slate-900">2) Hizmet kapsamı</h2>
-            <ul className="mt-3 space-y-2 text-slate-600 list-disc pl-5">
-              <li>QR kod ile giriş/çıkış kayıtlarının tutulması ve raporlanması</li>
-              <li>Yetkilendirme ve kullanıcı yönetimi</li>
-              <li>Demo, deneme ve ücretli paketlerin sunulması</li>
-            </ul>
-            <p className="text-slate-600 mt-3">
-              Özellikler ve paket içerikleri zaman zaman güncellenebilir.
-            </p>
-          </section>
+      <LegalSection title="3.3 Hizmetin kullanımı">
+        <p>Hizmet yalnızca meşru kurumsal amaçlarla kullanılabilir. Özellikle aşağıdakiler yasaktır:</p>
+        <ul>
+          <li>Sistemlere veya verilere yetkisiz erişim, müdahale veya zarar verme girişimleri</li>
+          <li>Otomasyon, tersine mühendislik veya Hizmeti aşırı yükleyecek kötüye kullanım</li>
+          <li>Başkası adına veya sahte bilgiyle işlem yapma (örneğin başka bir personelin QR kodunu okutma)</li>
+          <li>Konum veya geofence doğrulamasını atlatmaya ya da yanıltmaya yönelik müdahale</li>
+          <li>Yürürlükteki mevzuata ve kurum içi düzenlemelere aykırı davranış</li>
+        </ul>
+      </LegalSection>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="font-display text-xl font-semibold text-slate-900">3) Hesap ve güvenlik</h2>
-            <ul className="mt-3 space-y-2 text-slate-600 list-disc pl-5">
-              <li>Giriş bilgilerinizi gizli tutmak ve yetkisiz kullanım şüphesini derhal bildirmek sizin sorumluluğunuzdadır.</li>
-              <li>Hizmete erişim yetkileri rol bazlı olmalı; paylaşımlı hesap kullanımı önerilmez.</li>
-            </ul>
-          </section>
+      <LegalSection title="3.4 Veri ve gizlilik">
+        <p>
+          Kişisel verilerin işlenmesi,{' '}
+          <Link to="/gizlilik-politikasi" className="underline underline-offset-4 hover:text-slate-900">
+            Gizlilik Politikası
+          </Link>{' '}
+          ve{' '}
+          <Link to="/kvkk" className="underline underline-offset-4 hover:text-slate-900">
+            KVKK Aydınlatma Metni
+          </Link>{' '}
+          hükümlerine tabidir.
+        </p>
+      </LegalSection>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="font-display text-xl font-semibold text-slate-900">4) Kabul edilebilir kullanım</h2>
-            <p className="text-slate-600 mt-2">
-              Hizmet; hukuka aykırı, yanıltıcı, kötüye kullanım teşkil eden veya sistem güvenliğini riske atan amaçlarla kullanılamaz.
-              Yetkisiz erişim denemeleri, tersine mühendislik ve hizmeti engelleme girişimleri yasaktır.
-            </p>
-          </section>
+      <LegalSection title="3.5 Fikri mülkiyet">
+        <p>
+          QRKapı adı, arayüz tasarımı ve yazılım bileşenleri ilgili mevzuat kapsamında korunur. İzinsiz kopyalama, dağıtım veya
+          türev çalışma yapılamaz.
+        </p>
+      </LegalSection>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="font-display text-xl font-semibold text-slate-900">5) Ödeme, paketler ve iptal</h2>
-            <p className="text-slate-600 mt-2">
-              Ücretli paketlerde fiyatlandırma, faturalandırma periyodu ve kapsam; teklif/abonelik sözleşmesi veya ilgili sayfada belirtilen şartlara tabidir.
-              Deneme sürümleri süre ve özellik bakımından sınırlı olabilir.
-            </p>
-          </section>
+      <LegalSection title="3.6 Hizmetin değiştirilmesi ve kesintiler">
+        <p>
+          Hizmet; bakım, güncelleme veya mücbir sebeplerle geçici olarak kesintiye uğrayabilir veya özellikler
+          değiştirilebilir. Kesintisiz erişim taahhüt edilmez.
+        </p>
+      </LegalSection>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="font-display text-xl font-semibold text-slate-900">6) Fikri mülkiyet</h2>
-            <p className="text-slate-600 mt-2">
-              QRKapi’ye ait yazılım, arayüz, marka ve içerikler ilgili mevzuatla korunur. Yazılı izin olmadan kopyalama, çoğaltma,
-              dağıtma veya ticari kullanıma konu edilmesi yasaktır.
-            </p>
-          </section>
+      <LegalSection title="3.7 Sorumluluk sınırı">
+        <p>
+          Hizmet &quot;olduğu gibi&quot; sunulur. Yasaların izin verdiği ölçüde; dolaylı zararlar, veri kaybı, iş kaybı veya üçüncü
+          taraf eylemlerinden doğan zararlardan sorumluluk sınırlı veya dışlanmış olabilir.
+        </p>
+      </LegalSection>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="font-display text-xl font-semibold text-slate-900">7) Sorumluluğun sınırlandırılması</h2>
-            <p className="text-slate-600 mt-2">
-              Hizmet, “olduğu gibi” sunulabilir. Yasal zorunluluklar saklı kalmak üzere; dolaylı zararlar, kâr kaybı veya veri kaybından
-              doğan taleplerde sorumluluk, yürürlükteki mevzuatın izin verdiği ölçüde sınırlandırılabilir.
-            </p>
-          </section>
+      <LegalSection title="3.8 Fesih">
+        <p>Şirket, Koşulların ihlali halinde hesabınızı askıya alma veya sonlandırma hakkını saklı tutar.</p>
+      </LegalSection>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="font-display text-xl font-semibold text-slate-900">8) Değişiklikler</h2>
-            <p className="text-slate-600 mt-2">
-              Bu şartlar zaman zaman güncellenebilir. Güncel metin web sitesinde yayımlandığı tarihten itibaren geçerlidir.
-            </p>
-          </section>
+      <LegalSection title="3.9 Koşullarda değişiklik">
+        <p>Koşullar güncellenebilir. Yürürlükteki sürüm bu sayfada yayımlanır.</p>
+      </LegalSection>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="font-display text-xl font-semibold text-slate-900">9) İletişim</h2>
-            <p className="text-slate-600 mt-2">
-              Sorularınız için <a className="underline underline-offset-4" href="/iletisim">iletişim</a> sayfasını kullanabilirsiniz.
-            </p>
-          </section>
-        </div>
-      </div>
-    </main>
+      <LegalSection title="3.10 Uygulanacak hukuk ve uyuşmazlık">
+        <p>
+          Uyuşmazlıklarda Türkiye Cumhuriyeti kanunları uygulanır; yetkili mahkeme ve merciler {LEGAL.jurisdictionCity}{' '}
+          mahkemeleri ve icra daireleridir.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="İletişim">
+        <p>
+          Sorularınız için{' '}
+          <a className="underline underline-offset-4 hover:text-slate-900" href={`mailto:${LEGAL.supportContact}`}>
+            {LEGAL.supportContact}
+          </a>{' '}
+          adresine yazabilir veya{' '}
+          <Link to="/iletisim" className="underline underline-offset-4 hover:text-slate-900">
+            iletişim
+          </Link>{' '}
+          sayfasını kullanabilirsiniz.
+        </p>
+      </LegalSection>
+    </LegalPageShell>
   )
 }

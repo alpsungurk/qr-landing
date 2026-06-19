@@ -1,79 +1,161 @@
+import { Link } from 'react-router-dom'
+import {
+  LEGAL,
+  DATA_CATEGORIES,
+  THIRD_PARTY_PROCESSORS,
+  PROCESSING_PURPOSES,
+} from '../config/legal'
+import { LegalPageShell, LegalSection, LegalTable } from '../components/legal/LegalSection'
+
 export default function GizlilikPolitikasi() {
+  const categoryRows = DATA_CATEGORIES.map((row) => ({
+    category: row.category,
+    scope: row.scope,
+    examples: row.examples,
+  }))
+
+  const processorRows = THIRD_PARTY_PROCESSORS.map((row) => ({
+    name: row.name,
+    role: row.role,
+    data: row.data,
+  }))
+
   return (
-    <main className="pt-28 pb-16 px-6 bg-white">
-      <div className="max-w-4xl mx-auto">
-        <header className="mb-10">
-          <h1 className="font-display text-3xl sm:text-4xl font-bold text-slate-900">Gizlilik Politikası</h1>
-          <p className="text-slate-600 mt-3 max-w-3xl">
-            Bu politika, QRKapi (QR KAPI) hizmetlerini kullanırken toplanan verilerin hangi amaçlarla işlendiğini, nasıl korunduğunu
-            ve haklarınızı açıklar.
+    <LegalPageShell
+      title="Gizlilik Politikası"
+      intro={
+        <>
+          <p>
+            Bu Gizlilik Politikası, QRKapı adlı web tabanlı yönetim uygulamasının (&quot;Hizmet&quot;) kullanımı sırasında
+            kişisel verilerinizin nasıl işlendiğini açıklar. Hizmeti kullanarak bu politikayı kabul etmiş sayılırsınız.
           </p>
-          <p className="text-slate-500 text-sm mt-4">
-            Son güncelleme: {new Date().toLocaleDateString('tr-TR')}
+          <p className="mt-4">
+            Detaylı KVKK aydınlatması için{' '}
+            <Link to="/kvkk" className="underline underline-offset-4 hover:text-slate-900">
+              KVKK Aydınlatma Metni
+            </Link>{' '}
+            sayfasına bakınız.
           </p>
-        </header>
+        </>
+      }
+    >
+      <LegalSection title="1.1 Veri sorumlusu">
+        <p>
+          Kişisel verileriniz, <strong>{LEGAL.companyName}</strong> (&quot;Şirket&quot;; {LEGAL.address}) tarafından 6698
+          sayılı Kişisel Verilerin Korunması Kanunu (&quot;KVKK&quot;) ve ilgili mevzuat çerçevesinde veri sorumlusu sıfatıyla
+          işlenir.
+        </p>
+        <p>
+          Teknik altyapı (kimlik doğrulama, veritabanı, hata izleme, analitik) aşağıda listelenen üçüncü taraf bulut hizmet
+          sağlayıcıları üzerinden sağlanır. Bu sağlayıcılar, Şirketin talimatları ve sözleşmesel güvenceler doğrultusunda{' '}
+          <strong>veri işleyen</strong> sıfatıyla hareket eder.
+        </p>
+      </LegalSection>
 
-        <div className="space-y-6">
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="font-display text-xl font-semibold text-slate-900">1) Toplanan veriler</h2>
-            <ul className="mt-3 space-y-2 text-slate-600 list-disc pl-5">
-              <li>Kimlik ve iletişim bilgileri (demo/teklif taleplerinde ilettiğiniz bilgiler)</li>
-              <li>Giriş-çıkış kayıtları (tarih/saat, kullanıcı/rol, terminal bilgisi gibi operasyonel kayıtlar)</li>
-              <li>Cihaz ve kullanım verileri (oturum, tarayıcı/cihaz türü, hata kayıtları gibi teknik veriler)</li>
-            </ul>
-          </section>
+      <LegalSection title="1.2 İşlenen veri kategorileri">
+        <LegalTable
+          columns={['Kategori', 'Kapsam', 'Örnek alanlar']}
+          rows={categoryRows}
+          rowKey="category"
+        />
+      </LegalSection>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="font-display text-xl font-semibold text-slate-900">2) İşleme amaçları</h2>
-            <ul className="mt-3 space-y-2 text-slate-600 list-disc pl-5">
-              <li>Hizmetin sunulması, işletilmesi ve geliştirilmesi</li>
-              <li>Güvenliğin sağlanması, yetkilendirme ve kötüye kullanımın önlenmesi</li>
-              <li>Destek süreçlerinin yürütülmesi ve taleplerin yanıtlanması</li>
-              <li>Mevzuattan doğan yükümlülüklerin yerine getirilmesi</li>
-            </ul>
-          </section>
+      <LegalSection title="1.3 İşleme amaçları">
+        <ul>
+          {PROCESSING_PURPOSES.map((purpose) => (
+            <li key={purpose}>{purpose}</li>
+          ))}
+        </ul>
+      </LegalSection>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="font-display text-xl font-semibold text-slate-900">3) Paylaşım ve üçüncü taraflar</h2>
-            <p className="text-slate-600 mt-2">
-              Veriler; hizmetin sağlanması için gerekli olan altyapı sağlayıcılarıyla (barındırma, e-posta, analiz gibi) sınırlı şekilde
-              paylaşılabilir. Yalnızca işin gerektirdiği ölçüde ve uygun güvenlik önlemleriyle işlem yapılır.
-              Yasal zorunluluklar dışında veriler, izniniz olmadan üçüncü taraflara satılmaz.
-            </p>
-          </section>
+      <LegalSection title="1.4 Hukuki sebepler">
+        <p>
+          İşleme; KVKK m.5 ve m.6 kapsamında <strong>sözleşmenin kurulması veya ifası</strong> (iş ve hizmet ilişkisi),{' '}
+          <strong>veri sorumlusunun hukuki yükümlülüğünü yerine getirmesi</strong> (örneğin iş hukuku kayıt yükümlülükleri),{' '}
+          <strong>bir hakkın tesisi veya korunması için zorunlu olma</strong>, <strong>meşru menfaat</strong> veya — zorunlu
+          olmayan işlemler için — <strong>açık rıza</strong> sebeplerine dayanır.
+        </p>
+      </LegalSection>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="font-display text-xl font-semibold text-slate-900">4) Saklama süreleri</h2>
-            <p className="text-slate-600 mt-2">
-              Veriler; işleme amaçları için gerekli süre boyunca ve ilgili mevzuatta öngörülen süreler kapsamında saklanır.
-              Saklama süresi dolduğunda silme, yok etme veya anonimleştirme uygulanır.
-            </p>
-          </section>
+      <LegalSection title="1.5 Üçüncü taraf hizmet sağlayıcılar (veri işleyenler)">
+        <LegalTable
+          columns={['Sağlayıcı', 'Rolü', 'İşlenen veri türü']}
+          rows={processorRows}
+          rowKey="name"
+        />
+        <p>
+          Bu sağlayıcıların kendi gizlilik politikaları da geçerlidir. Şirket, bu sağlayıcılarla yapılan sözleşmelerde KVKK&apos;ya
+          uygun veri işleme güvenceleri almakla yükümlüdür.
+        </p>
+      </LegalSection>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="font-display text-xl font-semibold text-slate-900">5) Güvenlik</h2>
-            <p className="text-slate-600 mt-2">
-              Verilerin gizliliğini ve bütünlüğünü korumak için teknik ve idari tedbirler uygulanır. Buna erişim kontrolleri,
-              yetkilendirme, iz kayıtları ve güvenlik izleme uygulamaları dahil olabilir.
-            </p>
-          </section>
+      <LegalSection title="1.6 Yurt dışı aktarım">
+        <p>{LEGAL.crossBorderTransfer}</p>
+      </LegalSection>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="font-display text-xl font-semibold text-slate-900">6) Haklarınız</h2>
-            <p className="text-slate-600 mt-2">
-              KVKK kapsamında; verilerinize erişim, düzeltilmesini isteme, silinmesini/yok edilmesini talep etme, işleme itiraz etme
-              ve diğer yasal haklara sahipsiniz. Başvuru için <a className="underline underline-offset-4" href="/iletisim">iletişim</a> sayfasını kullanabilirsiniz.
-            </p>
-          </section>
+      <LegalSection title="1.7 Saklama süresi">
+        <p>
+          Veriler, işleme amacının gerektirdiği süre boyunca ve yasal zamanaşımı ile arşivleme yükümlülükleri çerçevesinde
+          saklanır. Güncel saklama süreleri:
+        </p>
+        <ul>
+          <li>QR giriş ve çıkış kayıtları ile değişiklik logları: {LEGAL.dataRetention.qrLogs}</li>
+          <li>Oturum ve güvenlik logları (IP adresi, tarayıcı kimliği): {LEGAL.dataRetention.sessionLogs}</li>
+          <li>İzin ve çalışma süresi kayıtları: {LEGAL.dataRetention.leaveRecords}</li>
+        </ul>
+        <p>Süre sonunda veriler silinir, yok edilir veya anonim hale getirilir.</p>
+      </LegalSection>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="font-display text-xl font-semibold text-slate-900">7) Değişiklikler</h2>
-            <p className="text-slate-600 mt-2">
-              Bu politika zaman zaman güncellenebilir. Güncel metin web sitesinde yayımlandığı tarihten itibaren geçerlidir.
-            </p>
-          </section>
-        </div>
-      </div>
-    </main>
+      <LegalSection title="1.8 Çerezler ve yerel depolama">
+        <p>
+          Hizmet, yasal metinlerin onaylandığını hatırlamak için tarayıcınızda zorunlu bir yerel depolama (localStorage) kaydı
+          tutar.
+        </p>
+        <p>
+          Ayrıca yukarıda listelenen analitik ve hata izleme sağlayıcıları (Sentry, Vercel Analytics) kendi çerez veya benzer
+          izleme teknolojilerini kullanabilir. Zorunlu olmayan çerezler için tarayıcı ayarlarınızdan tercih belirtebilirsiniz;
+          bazı çerezlerin engellenmesi Hizmetin bazı işlevlerini etkileyebilir.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="1.9 Güvenlik">
+        <p>
+          Oturum ve iletişimde endüstri standardı güvenlik uygulamaları (şifreli iletişim, erişim kontrolleri, rol bazlı
+          yetkilendirme) uygulanır; mutlak güvenlik taahhüt edilemez.
+        </p>
+        <p>Hesap bilgilerinizi üçüncü kişilerle paylaşmamanız önemlidir.</p>
+      </LegalSection>
+
+      <LegalSection title="1.10 Haklarınız">
+        <p>
+          KVKK m.11 kapsamındaki haklarınız için{' '}
+          <Link to="/kvkk" className="underline underline-offset-4 hover:text-slate-900">
+            KVKK Aydınlatma Metni — Haklar
+          </Link>{' '}
+          bölümüne bakınız.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="1.11 Politika değişiklikleri">
+        <p>
+          Bu metin güncellenebilir. Önemli değişiklikler uygulama içinden veya kurum kanallarıyla duyurulur. Güncel sürüm bu
+          sayfada &quot;Son güncelleme&quot; tarihiyle yayımlanır.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="1.12 İletişim">
+        <p>
+          Sorularınız için{' '}
+          <a className="underline underline-offset-4 hover:text-slate-900" href={`mailto:${LEGAL.supportContact}`}>
+            {LEGAL.supportContact}
+          </a>{' '}
+          adresine yazabilir veya{' '}
+          <Link to="/iletisim" className="underline underline-offset-4 hover:text-slate-900">
+            iletişim
+          </Link>{' '}
+          sayfasını kullanabilirsiniz.
+        </p>
+      </LegalSection>
+    </LegalPageShell>
   )
 }

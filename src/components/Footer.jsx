@@ -11,6 +11,7 @@ export default function Footer() {
         </div>
         <div className="flex flex-wrap justify-center md:justify-center gap-8 md:gap-10">
           <Link to="/gizlilik-politikasi" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors tracking-tight">Gizlilik Politikası</Link>
+          <Link to="/kvkk" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors tracking-tight">KVKK</Link>
           <Link to="/kullanim-sartlari" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors tracking-tight">Kullanım Şartları</Link>
           <Link to="/iletisim" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors tracking-tight">İletişim</Link>
         </div>
