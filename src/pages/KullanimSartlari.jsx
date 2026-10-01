@@ -12,7 +12,7 @@ export default function KullanimSartlari() {
           düzenler. Hizmete giriş yaparak veya kullanarak bu Koşulları okuduğunuzu ve kabul ettiğinizi beyan edersiniz.
         </p>
       }
-    >
+    > 
       <LegalSection title="3.1 Taraflar ve kapsam">
         <p>
           Hizmet, <strong>{LEGAL.companyName}</strong> tarafından; personel veya yetkili kullanıcıların QR geçiş kayıtlarını,
