@@ -27,6 +27,7 @@ import GizlilikPolitikasi from './pages/GizlilikPolitikasi'
 import KvkkAydinlatma from './pages/KvkkAydinlatma'
 import KullanimSartlari from './pages/KullanimSartlari'
 import Iletisim from './pages/Iletisim'
+import Fiyatlandirma from './pages/Fiyatlandirma'
 
 const viewport = { once: false, margin: '-60px' }
 
@@ -1047,6 +1048,8 @@ function App() {
           <Route path="/kullanim-sartlari" element={<KullanimSartlari />} />
           <Route path="/kosullar" element={<KullanimSartlari />} />
           <Route path="/iletisim" element={<Iletisim />} />
+          <Route path="/fiyatlandirma" element={<Fiyatlandirma />} />
+          <Route path="/fiyat" element={<Fiyatlandirma />} />
             </Routes>
             <Footer />
           </motion.div>

@@ -10,6 +10,7 @@ import {
   LayoutDashboard,
   ShieldCheck,
   ArrowRight,
+  Tag,
 } from 'lucide-react'
 
 const NAV_ITEMS = [
@@ -17,6 +18,7 @@ const NAV_ITEMS = [
   { label: 'Nasıl Çalışır', hash: '#nasil-calisir', icon: ListOrdered },
   { label: 'Özet', hash: '#panel', icon: LayoutDashboard },
   { label: 'Güvenlik', hash: '#guvenlik', icon: ShieldCheck },
+  { label: 'Fiyatlandırma', to: '/fiyatlandirma', icon: Tag },
 ]
 
 const menuIconClass =
@@ -24,7 +26,7 @@ const menuIconClass =
 
 const panelSpring = { type: 'spring', stiffness: 380, damping: 36 }
 
-function MobileSidebar({ open, onClose, goToHash, handleDemoClick }) {
+function MobileSidebar({ open, onClose, goToHash, goToPage, activePath, handleDemoClick }) {
   if (typeof document === 'undefined') return null
 
   return createPortal(
@@ -68,16 +70,16 @@ function MobileSidebar({ open, onClose, goToHash, handleDemoClick }) {
                 Menü
               </p>
               <ul className="space-y-2.5">
-                {NAV_ITEMS.map(({ label, hash, icon: Icon }, index) => (
+                {NAV_ITEMS.map(({ label, hash, to, icon: Icon }, index) => (
                   <motion.li
-                    key={hash}
+                    key={hash ?? to}
                     initial={{ opacity: 1, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.05 + index * 0.05, duration: 0.3, ease: [0.22, 0.61, 0.36, 1] }}
                   >
                     <button
                       type="button"
-                      onClick={() => goToHash(hash)}
+                      onClick={() => (to ? goToPage(to) : goToHash(hash))}
                       className="group w-full flex items-center gap-3.5 px-3.5 py-3.5 rounded-2xl text-left font-semibold bg-slate-100/95 hover:bg-slate-200/70 border border-slate-200/80 shadow-[0_2px_10px_rgba(15,23,42,0.06)] hover:shadow-[0_4px_14px_rgba(15,23,42,0.09)] hover:border-slate-300/90 active:scale-[0.98] transition-all duration-200"
                     >
                       <span
@@ -85,7 +87,7 @@ function MobileSidebar({ open, onClose, goToHash, handleDemoClick }) {
                       >
                         <Icon strokeWidth={1.85} className="w-5 h-5" />
                       </span>
-                      <span className="flex-1 text-[15px] tracking-tight text-slate-800">{label}</span>
+                      <span className={`flex-1 text-[15px] tracking-tight ${to && activePath === to ? 'text-blue-600' : 'text-slate-800'}`}>{label}</span>
                       <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-200/80 text-slate-600 group-hover:bg-slate-800 group-hover:text-white transition-colors duration-200">
                         <ArrowRight strokeWidth={2.25} className="w-4 h-4" />
                       </span>
@@ -156,6 +158,12 @@ export default function Navbar({ navScrolled, resetPage, onLogoClick }) {
     }, 150)
   }
 
+  const goToPage = (path) => {
+    closeMobile()
+    navigate(path)
+    window.scrollTo({ top: 0 })
+  }
+
   const handleDemoClick = (e) => {
     e?.preventDefault()
     closeMobile()
@@ -181,23 +189,33 @@ export default function Navbar({ navScrolled, resetPage, onLogoClick }) {
           <div className="hidden md:flex items-center gap-8">
             {isHome ? (
               <>
-                {NAV_ITEMS.map(({ label, hash }) => (
-                  <a
-                    key={hash}
-                    href={hash}
-                    className="text-sm font-semibold text-slate-800 hover:text-blue-600 transition-colors [text-shadow:0_0_20px_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.05)]"
-                  >
-                    {label}
-                  </a>
-                ))}
+                {NAV_ITEMS.map(({ label, hash, to }) =>
+                  to ? (
+                    <Link
+                      key={to}
+                      to={to}
+                      className="text-sm font-semibold text-slate-800 hover:text-blue-600 transition-colors [text-shadow:0_0_20px_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.05)]"
+                    >
+                      {label}
+                    </Link>
+                  ) : (
+                    <a
+                      key={hash}
+                      href={hash}
+                      className="text-sm font-semibold text-slate-800 hover:text-blue-600 transition-colors [text-shadow:0_0_20px_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.05)]"
+                    >
+                      {label}
+                    </a>
+                  )
+                )}
               </>
             ) : (
               <>
-                {NAV_ITEMS.map(({ label, hash }) => (
+                {NAV_ITEMS.map(({ label, hash, to }) => (
                   <Link
-                    key={hash}
-                    to={`/${hash}`}
-                    className="text-sm font-semibold text-slate-800 hover:text-blue-600 transition-colors"
+                    key={hash ?? to}
+                    to={to ?? `/${hash}`}
+                    className={`text-sm font-semibold hover:text-blue-600 transition-colors ${to && location.pathname === to ? 'text-blue-600' : 'text-slate-800'}`}
                   >
                     {label}
                   </Link>
@@ -230,6 +248,8 @@ export default function Navbar({ navScrolled, resetPage, onLogoClick }) {
         open={mobileOpen}
         onClose={closeMobile}
         goToHash={goToHash}
+        goToPage={goToPage}
+        activePath={location.pathname}
         handleDemoClick={handleDemoClick}
       />
     </nav>
